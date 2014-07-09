@@ -42,7 +42,10 @@ class API(object):
 
     def api_call(self, method, param={}, private=0, couple=''):  # api call (Middle level)
         url = 'https://cex.io/api/' + method + '/'  # generate url
-        if couple != '':
+        ## quick mod
+        if method == 'ghash.io':
+            url = url + couple # set couple if needed
+        elif couple != '':
             url = url + couple + '/'  # set couple if needed
         if private == 1:  # add auth-data if needed
             self.__nonce()
@@ -50,6 +53,7 @@ class API(object):
                 'key': self.__api_key,
                 'signature': self.__signature(),
                 'nonce': self.__nonce_v})
+        print( url )
         answer = self.__post(url, param)  # Post Request
         return json.loads(answer)  # generate dict and return
 
@@ -73,3 +77,10 @@ class API(object):
 
     def place_order(self, ptype='buy', amount=1, price=1, couple='GHS/BTC'):
         return self.api_call('place_order', {"type": ptype, "amount": str(amount), "price": str(price)}, 1, couple)
+
+
+    def hash_rate(self):
+        return self.api_call('ghash.io', { }, 1, 'hashrate')
+        
+    def workers_rate(self):
+        return self.api_call('ghash.io', { }, 1, 'workers')
