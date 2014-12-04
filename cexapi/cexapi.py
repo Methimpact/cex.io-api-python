@@ -80,7 +80,8 @@ class API(object):
     
     def price_stats(self, last_hours, max_resp_arr_size, couple='GHS/BTC'):
         return self.api_call( 'price_stats', {"lastHours": last_hours, "maxRespArrSize": max_resp_arr_size},0, couple)
-
+    def orders_history(self, couple='GHS/BTC', max=20):
+        return self.api_call('archived_orders', {'limit' : max}, 1, couple)
 
     def hash_rate(self):
         return self.api_call('ghash.io', { }, 1, 'hashrate')
