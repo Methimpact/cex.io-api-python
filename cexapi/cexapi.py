@@ -76,7 +76,10 @@ class API(object):
         return self.api_call('cancel_order', {"id": order_id}, 1)
 
     def place_order(self, ptype='buy', amount=1, price=1, couple='GHS/BTC'):
-        return self.api_call('place_order', {"type": ptype, "amount": str(amount), "price": str(price)}, 1, couple)
+        return self.api_call( 'place_order', {"type": ptype, "amount": str(amount), "price": str(price)}, 1, couple)
+    
+    def price_stats(self, last_hours, max_resp_arr_size, couple='GHS/BTC'):
+        return self.api_call( 'price_stats', {"lastHours": last_hours, "maxRespArrSize": max_resp_arr_size},0, couple)
 
 
     def hash_rate(self):
